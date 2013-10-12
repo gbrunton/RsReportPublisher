@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Xml;
 
 namespace Publisher.Commands.PublishReports.Models.Config
@@ -10,7 +11,6 @@ namespace Publisher.Commands.PublishReports.Models.Config
 		//
 
 		public const string Configuration_Tag = "configuration";
-		private const string reportLocalPath_Attribute = "reportLocalPath";
 
 		//
 		// Fields
@@ -62,12 +62,7 @@ namespace Publisher.Commands.PublishReports.Models.Config
 			{
 				if (this.reportLocalPath == null)
 				{
-					var reportLocalPathFromAttributes = base.node.Attributes[reportLocalPath_Attribute];
-
-					if (reportLocalPathFromAttributes != null)
-					{
-						this.reportLocalPath = reportLocalPathFromAttributes.Value;
-					}
+					this.reportLocalPath = Path.GetDirectoryName(StaticVariables.PathToConfigurationFile);
 				}
 
 				return this.reportLocalPath;
