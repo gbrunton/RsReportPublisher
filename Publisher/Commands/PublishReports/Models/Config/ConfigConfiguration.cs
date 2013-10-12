@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Xml;
 
 namespace Publisher.Commands.PublishReports.Models.Config
@@ -10,7 +9,6 @@ namespace Publisher.Commands.PublishReports.Models.Config
 		// Constants
 		//
 
-		private const string reportPublisherFileName = "ReportPublisher.config";
 		public const string Configuration_Tag = "configuration";
 		private const string reportLocalPath_Attribute = "reportLocalPath";
 
@@ -29,8 +27,7 @@ namespace Publisher.Commands.PublishReports.Models.Config
 		public ConfigConfiguration()
 		{
 			this.configFile = new XmlDocument();
-			this.configFile.Load(File.OpenText(string.Format(@"{0}..\Configuration\{1}", AppDomain.CurrentDomain.BaseDirectory, reportPublisherFileName)));
-
+			this.configFile.Load(StaticVariables.PathToConfigurationFile);
 			base.node = this.configFile.DocumentElement;
 		}
 

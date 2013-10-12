@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FubuCore.CommandLine;
+using Publisher.Commands.PublishReports.Models;
 using Publisher.Commands.PublishReports.Models.Config;
 using Publisher.Commands.PublishReports.Models.Web;
 using Publisher.WebReportService;
@@ -12,8 +13,12 @@ namespace Publisher.Commands.PublishReports
 	{
 		protected override bool ExecuteHydratedObject(InputModel inputModel)
 		{
-			var reportServerRoot = inputModel.ReportServerRootFolder;
-			var fundName = inputModel.ProjectName;
+			StaticVariables.PathToConfigurationFile = inputModel.PathToConfigurationFile;
+
+			Properties.Settings.Default.Publisher_WebReportService_ReportingService2005 = inputModel.ReportServerUrl;
+			Properties.Settings.Default.Save();
+			var reportServerRootFolder = inputModel.ReportServerRootFolder;
+			var projectName = inputModel.ProjectName;
 			var configConfiguration = new ConfigConfiguration();
 
 			// Setting up root level policies
@@ -23,16 +28,16 @@ namespace Publisher.Commands.PublishReports
 
 			foreach (var configFolder in configConfiguration.Folders())
 			{
-				if (!configFolder.Name.Equals(fundName)) continue;
+				if (!configFolder.Name.Equals(projectName)) continue;
 
-				Console.WriteLine("Starting Fund {0} report publishing.", configFolder.Name);
+				Console.WriteLine("Starting Project {0} report publishing.", configFolder.Name);
 
-				var webFund = new WebFund(reportServerRoot, configFolder.Name, configFolder.DataSource.Name, configFolder.InheritPermissions);
+				var webFund = new WebFund(reportServerRootFolder, configFolder.Name, configFolder.DataSource.Name, configFolder.InheritPermissions);
 
 				build(configFolder, webFund.RootWebFolder);
 				webFund.Save();
 
-				Console.WriteLine("Completed Fund {0} report publishing.", configFolder.Name);
+				Console.WriteLine("Completed Project {0} report publishing.", configFolder.Name);
 			}
 			return true;
 		}
@@ -99,6 +104,8 @@ namespace Publisher.Commands.PublishReports
 
 	public class InputModel
 	{
+		public string ReportServerUrl { get; set; }
+		public string PathToConfigurationFile { get; set; }
 		public string ReportServerRootFolder { get; set; }
 		public string ProjectName { get; set; }
 	}

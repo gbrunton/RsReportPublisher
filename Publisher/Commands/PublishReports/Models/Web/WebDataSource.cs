@@ -9,7 +9,7 @@ namespace Publisher.Commands.PublishReports.Models.Web
 		// Constants
 		//
 
-		private const string connectionString = @"data source=localhost\TrustFundAEA;initial catalog={0}";
+		private const string connectionString = "";
 
 		//
 		// Fields

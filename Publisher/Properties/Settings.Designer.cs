@@ -23,13 +23,16 @@ namespace Publisher.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("https://PHXAPPS-VM:443/ReportServer_TRUSTFUNDAEA/ReportService2005.asmx")]
         public string Publisher_WebReportService_ReportingService2005 {
             get {
                 return ((string)(this["Publisher_WebReportService_ReportingService2005"]));
+            }
+            set {
+                this["Publisher_WebReportService_ReportingService2005"] = value;
             }
         }
     }

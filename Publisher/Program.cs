@@ -11,7 +11,11 @@ namespace Publisher
 			{
 				args = new []
 					{
-						"publish"
+						"publish",
+						"https://phxqiclink.adssa.local/ReportServer$DataPiction2005/ReportService2005.asmx",
+						@"C:\gary\devel\QicLink\ReportingServices\Reports\ReportPublisher.config",
+						"ClaimsReports",
+						"Basys"
 					};
 			}
 

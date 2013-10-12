@@ -63,6 +63,7 @@
     <Compile Include="Commands\PublishReports\Models\Config\ConfigReportParameter.cs" />
     <Compile Include="Commands\PublishReports\Models\Config\ConfigRole.cs" />
     <Compile Include="Commands\PublishReports\Models\Config\ConfigStyleSheet.cs" />
+    <Compile Include="Commands\PublishReports\Models\StaticVariables.cs" />
     <Compile Include="Commands\PublishReports\Models\Web\WebDataSource.cs" />
     <Compile Include="Commands\PublishReports\Models\Web\WebFolder.cs" />
     <Compile Include="Commands\PublishReports\Models\Web\WebFund.cs" />
