@@ -29,7 +29,6 @@ namespace ReportPublisherConfig.Handlers.Home.save
             var obj = JsonConvert.DeserializeObject<jsTreeSaveInputModel>(jsTreeSaveInputModel.data);
 
             var configuration = Mapper.Map<jsTreeSaveInputModel, configuration>(obj);
-            configuration.reportLocalPath = @"..\";
             configuration.policy.Add(new Policy { name = @"BUILTIN\Administrators", role = new Role { name = "Content Manager" } });
             configuration.policy.Add(new Policy { name = @"NT AUTHORITY\NETWORKSERVICE", role = new Role { name = "Content Manager" } });
             configuration.policy.Add(new Policy { name = @"Domain1\AEA_DatabaseAdmins", role = new Role { name = "Content Manager" } });
