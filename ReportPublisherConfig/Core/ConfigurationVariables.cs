@@ -29,12 +29,12 @@ namespace ReportPublisherConfig.Core
 
 		public string GetReportPublisherProgramPath()
         {
-            return this.GetReportPublisherBinFolderPath() + "Publisher";
+            return this.GetReportPublisherBinFolderPath() + "Publisher.exe";
         }
 
         public string GetReportPublisherBinFolderPath()
         {
-            return getReportPublisherRoot() + @"bin\";
+			return Path.GetFullPath(HttpContext.Current.Request.PhysicalApplicationPath + @"\..\tool\Publisher\");
         }
 
         public IEnumerable<Site> GetSites()
@@ -47,11 +47,6 @@ namespace ReportPublisherConfig.Core
                     Name = x.Replace("site-", string.Empty),
                     Url = appSettings[x]
                 });
-        }
-
-        private static string getReportPublisherRoot()
-        {
-            return Path.GetFullPath(HttpContext.Current.Request.PhysicalApplicationPath + @"\..\..\TrustFundAEA.ReportPublisher\");
         }
     }
 }
