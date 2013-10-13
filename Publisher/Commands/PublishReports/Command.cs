@@ -107,6 +107,7 @@ namespace Publisher.Commands.PublishReports
 		public string ReportServerUrl { get; set; }
 		public string PathToConfigurationFile { get; set; }
 		public string ReportServerRootFolder { get; set; }
+		[FlagAlias("p")]
 		public string ProjectNameFlag { get; set; }
 	}
 }

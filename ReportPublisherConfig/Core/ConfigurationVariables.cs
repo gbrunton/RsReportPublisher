@@ -34,7 +34,7 @@ namespace ReportPublisherConfig.Core
 
         public string GetReportPublisherBinFolderPath()
         {
-			return Path.GetFullPath(HttpContext.Current.Request.PhysicalApplicationPath + @"\..\tool\Publisher\");
+			return Path.GetFullPath(HttpContext.Current.Request.PhysicalApplicationPath + @"\..\tools\Publisher\");
         }
 
         public IEnumerable<Site> GetSites()

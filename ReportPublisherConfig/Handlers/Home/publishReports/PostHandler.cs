@@ -24,7 +24,7 @@ namespace ReportPublisherConfig.Handlers.Home.publishReports
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.WorkingDirectory = this.configurationVariables.GetReportPublisherBinFolderPath();
-	            process.StartInfo.Arguments = "/K {0} {1} {2} {3} {4} -projectname {5}"
+	            process.StartInfo.Arguments = "/K {0} {1} {2} {3} {4} -p {5}"
 		            .ToFormat
 		            (
 			            this.configurationVariables.GetReportPublisherProgramPath(),
