@@ -18,7 +18,7 @@ namespace Publisher.Commands.PublishReports
 			Properties.Settings.Default.Publisher_WebReportService_ReportingService2005 = inputModel.ReportServerUrl;
 			Properties.Settings.Default.Save();
 			var reportServerRootFolder = inputModel.ReportServerRootFolder;
-			var projectName = inputModel.ProjectName;
+			var projectName = inputModel.ProjectNameFlag;
 			var configConfiguration = new ConfigConfiguration();
 
 			// Setting up root level policies
@@ -28,7 +28,7 @@ namespace Publisher.Commands.PublishReports
 
 			foreach (var configFolder in configConfiguration.Folders())
 			{
-				if (!configFolder.Name.Equals(projectName)) continue;
+				if (!string.IsNullOrEmpty(projectName) && !configFolder.Name.Equals(projectName)) continue;
 
 				Console.WriteLine("Starting Project {0} report publishing.", configFolder.Name);
 
@@ -107,6 +107,6 @@ namespace Publisher.Commands.PublishReports
 		public string ReportServerUrl { get; set; }
 		public string PathToConfigurationFile { get; set; }
 		public string ReportServerRootFolder { get; set; }
-		public string ProjectName { get; set; }
+		public string ProjectNameFlag { get; set; }
 	}
 }
