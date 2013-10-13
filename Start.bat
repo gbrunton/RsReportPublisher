@@ -1,2 +1,2 @@
 start LaunchBrowser.vbs
-tools\IISExpress\iisexpress /path:%~dp0WebPublisher /port:8100
+tools\IISExpress\iisexpress /path:%~dp0ReportPublisherConfig /port:8100
