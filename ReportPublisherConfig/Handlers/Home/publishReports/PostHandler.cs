@@ -24,18 +24,23 @@ namespace ReportPublisherConfig.Handlers.Home.publishReports
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.WorkingDirectory = this.configurationVariables.GetReportPublisherBinFolderPath();
-	            process.StartInfo.Arguments = "/K {0} {1} {2} {3} {4} -p {5}"
+	            process.StartInfo.Arguments = "/K {0} {1} {2} {3} {4}"
 		            .ToFormat
 		            (
 			            this.configurationVariables.GetReportPublisherProgramPath(),
 						"publish",
 						publishReportsInputModel.site,
 						this.configurationVariables.GetPathToConfigFile(),
-						this.configurationVariables.GetReportServerRootFolder(),
-			            publishReportsInputModel.folderName.ToUpper() == "CONFIGURATION"
-				            ? ""
-				            : publishReportsInputModel.folderName
+						this.configurationVariables.GetReportServerRootFolder()
 		            );
+
+	            var folderName = publishReportsInputModel.folderName.ToUpper() == "CONFIGURATION"
+		                             ? ""
+		                             : publishReportsInputModel.folderName;
+				if (!string.IsNullOrEmpty(folderName))
+				{
+					process.StartInfo.Arguments += " -p " + folderName;
+				}
                 process.Start();
                 process.WaitForExit();
             }
