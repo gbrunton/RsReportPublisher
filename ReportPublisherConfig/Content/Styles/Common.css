@@ -1,0 +1,11 @@
+﻿body
+{
+    font-family: verdana;
+    font-size: 10pt;
+}
+.litPad {
+    padding: 10px;
+}
+.noTitleStuff .ui-dialog-titlebar {
+    display:none
+}

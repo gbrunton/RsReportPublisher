@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{00298C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Publisher", "Publisher\Publisher.csproj", "{7F9B4C56-2BBF-43B2-92A6-214672557D7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportPublisherConfig", "ReportPublisherConfig\ReportPublisherConfig.csproj", "{FB383EF0-E7AB-4AD5-B568-715A1688C01C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{7F9B4C56-2BBF-43B2-92A6-214672557D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F9B4C56-2BBF-43B2-92A6-214672557D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F9B4C56-2BBF-43B2-92A6-214672557D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB383EF0-E7AB-4AD5-B568-715A1688C01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB383EF0-E7AB-4AD5-B568-715A1688C01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB383EF0-E7AB-4AD5-B568-715A1688C01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB383EF0-E7AB-4AD5-B568-715A1688C01C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

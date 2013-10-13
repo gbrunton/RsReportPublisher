@@ -1,0 +1,162 @@
+﻿@using ReportPublisherConfig
+@model ReportPublisherConfig.Handlers.Home.HomeViewModel
+
+@{
+    ViewBag.Title = "Report Publisher Config";
+}
+
+@{ this.Script("home"); }
+
+<script>
+    $(function () {
+        SSA.Home.init(@Raw(this.Model.Sites.ToJSON()));
+    }); 
+</script>
+<style>
+    .legendItem {
+        padding-right:15px;
+        white-space: nowrap;
+    }
+</style>
+<div>
+    <div class="ui-widget ui-widget-content ui-corner-all">
+        <div class="ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix" style="padding:5px;">
+            <span>Report Publisher Config</span>
+        </div>        
+        <div class="ui-state-active" style="padding:5px;">
+            <a data-bind="jqButton: {leftIcon: 'check', label: 'Save', click: save}"></a>
+            <a data-bind="jqButton: {leftIcon: 'minusthick', label: 'Collapse All', click: collapseAll}"></a>
+        </div>
+        <div id="container" style="overflow: auto">
+            <div style="padding:15px;" id="demo">
+                <div data-bind="jstree: jsTree">
+                    <ul>
+                        <li id="configuration" rel="Folder" canPublish="true">
+                            <a href="#">Configuration</a>
+                            <ul>
+                                @ShowSubItems(Model.Configuration, "root", true)
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <br/>
+            </div>
+        </div>
+        <div class="ui-state-active" style="padding:5px;">
+            <div style="font-weight:800;font-size:12pt;padding-bottom:10px;">Legend</div>
+            <div>
+                <span class="legendItem"><img src="../../Images/Report.png"/> Report</span>
+                <span class="legendItem"><img src="../../Images/commonReport.png"/> Common Report</span>
+                <span class="legendItem"><img src="../../Images/xsl.png"/> StyleSheet</span>
+                <span class="legendItem"><img src="../../Images/commonXsl.png"/> Common StyleSheet</span>
+                <span class="legendItem"><img src="../../Images/database.png"/> Data Source</span>
+                <span class="legendItem"><img src="../../Images/param.png"/> Parameter</span>
+                <span class="legendItem"><img src="../../Images/property.png"/> Property</span>
+                <span class="legendItem"><img src="../../Images/folder.png"/> Inheriting Folder</span>
+                <span class="legendItem"><img src="../../Images/lock.png"/> Non-Inherting Folder</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="jqDialog: addReportDialog">
+    Choose your report:
+    <input type="file" data-bind="value: reportToAdd"/>
+    <br/>
+    <label for="isCommon">Is Common?</label>
+    <input id="isCommon" type="checkbox" data-bind="checked: reportToAddIsCommon"/>
+</div>                                
+
+<div data-bind="jqDialog: publishDialog">
+    Choose a site to publish to:
+    <select data-bind="options: sites, optionsValue: 'Url', optionsText: 'Name', value: selectedSite"></select>
+</div>                                
+
+@helper ShowSubItems(dynamic _object, string path, bool canPublish = false)
+    {
+        if (_object.GetType().GetProperty("sharedDataSource") != null && _object.sharedDataSource != null)
+        {
+        <li rel="DataSource">
+            <a href="#">@_object.sharedDataSource.name</a>
+        </li>
+        }
+
+        if (_object.GetType().GetProperty("styleSheet") != null && _object.styleSheet != null)
+        {
+            foreach (var subItem in _object.styleSheet)
+            {
+                var type = "StyleSheet";
+                if (subItem.commonReport == null || subItem.commonReport.ToString().ToLower() == "true")
+                {
+                    type = "CommonStyleSheet";
+                }
+            <li rel="@type">
+                <a href="#">@subItem.name</a>
+            </li>
+            }
+        }
+
+        if (_object.GetType().GetProperty("report") != null && _object.report != null)
+        {
+            foreach (var subItem in _object.report)
+            {
+                var type = "Report";
+                if (subItem.commonReport == null || subItem.commonReport.ToString().ToLower() == "true")
+                {
+                    type = "CommonReport";
+                }
+             <li rel="@type">
+                 <a href="#">@subItem.name</a>
+                 <ul>
+                     @if (@subItem.property != null && @subItem.property.Count > 0)
+                     {
+                         <li rel="PropertyCollection">
+                             <a href="#">Properties</a>
+                             <ul>
+                                 @foreach (var prop in subItem.property)
+                                 {
+                                     <li rel="Property">
+                                         <a href="#">@prop.name = @prop.value</a>
+                                     </li>
+                                 }
+                             </ul>
+                         </li>
+                     }
+                     @if (@subItem.parameter != null && @subItem.parameter.Count > 0)
+                     { 
+                         <li rel="ParameterCollection">
+                             <a href="#">Parameters</a>
+                             <ul>
+                                 @foreach (var prop in subItem.parameter)
+                                 {
+                                     <li rel="Parameter">
+                                         <a href="#">@prop.name = @prop.value</a>
+                                     </li>
+                                 }   
+                             </ul>
+                         </li>
+                     }
+                 </ul>
+             </li>
+            }
+        }
+
+        if (_object.GetType().GetProperty("folder") != null && _object.folder != null)
+        {
+            foreach (var subItem in _object.folder)
+            {
+                var type = "Folder";
+                var name = subItem.name.Replace(" ", "");
+                if (subItem.inheritPermissions == false) { type = "DoesNotInheritPermissionsFolder"; }
+                 <li id="@path@name" rel="@type" canPublish="@canPublish.ToString().ToLower()">
+                    <a href="#">@subItem.name</a>
+                    @if (subItem.GetType().GetProperty("folder") != null)
+                    {
+                        <ul>
+                            @ShowSubItems(subItem, path + name)
+                        </ul>
+                    }
+                </li>
+            }
+        }
+ }
