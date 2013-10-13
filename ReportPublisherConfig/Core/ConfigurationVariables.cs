@@ -10,12 +10,11 @@ namespace ReportPublisherConfig.Core
     {
         public string GetPathToConfigFile()
         {
-            return getReportPublisherRoot() + @"Configuration\ReportPublisher.config";
-        }
-
-        public string GetPathToSiteConfigFile()
-        {
-            return this.GetReportPublisherBinFolderPath() + "TrustFundAEA.ReportPublisher.exe.config";
+			var appSettings = System.Web.Configuration.WebConfigurationManager.AppSettings;
+			 var index = appSettings
+				.AllKeys
+				.Single(x => x == "PathToConfig");
+			return appSettings[index];
         }
 
         public string GetReportPublisherProgramPath()

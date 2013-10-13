@@ -9,21 +9,16 @@ namespace ReportPublisherConfig.Handlers.Home.publishReports
     public class PostHandler
     {
         private readonly ConfigurationVariables configurationVariables;
-        private readonly SiteConfigManager siteConfigManager;
 
-        public PostHandler(ConfigurationVariables configurationVariables, SiteConfigManager siteConfigManager)
+        public PostHandler(ConfigurationVariables configurationVariables)
         {
             if (configurationVariables == null) throw new ArgumentNullException("configurationVariables");
-            if (siteConfigManager == null) throw new ArgumentNullException("siteConfigManager");
             this.configurationVariables = configurationVariables;
-            this.siteConfigManager = siteConfigManager;
         }
 
         [AjaxAction]
         public string Execute(PublishReportsInputModel publishReportsInputModel)
         {
-            this.siteConfigManager.Update(publishReportsInputModel.site);
-
             using (var process = new Process())
             {
                 process.StartInfo.UseShellExecute = true;

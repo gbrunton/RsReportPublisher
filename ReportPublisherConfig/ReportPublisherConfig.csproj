@@ -22,6 +22,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -202,7 +206,6 @@
     <Compile Include="Configuration\Conventions\AjaxConvention.cs" />
     <Compile Include="Configuration\ApplicationStartupTasks\CreateAutoMapperMappings.cs" />
     <Compile Include="Core\ConfigurationVariables.cs" />
-    <Compile Include="Core\SiteConfigManager.cs" />
     <Compile Include="Handlers\Home\publishReports\PostHandler.cs" />
     <Compile Include="Handlers\Home\save\PostHandler.cs" />
     <Compile Include="Models\configuration.cs" />
