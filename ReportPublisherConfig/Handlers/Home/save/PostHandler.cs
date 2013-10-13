@@ -27,12 +27,7 @@ namespace ReportPublisherConfig.Handlers.Home.save
         public object Execute(jsTreeSaveInputModel jsTreeSaveInputModel)
         {
             var obj = JsonConvert.DeserializeObject<jsTreeSaveInputModel>(jsTreeSaveInputModel.data);
-
             var configuration = Mapper.Map<jsTreeSaveInputModel, configuration>(obj);
-            configuration.policy.Add(new Policy { name = @"BUILTIN\Administrators", role = new Role { name = "Content Manager" } });
-            configuration.policy.Add(new Policy { name = @"NT AUTHORITY\NETWORKSERVICE", role = new Role { name = "Content Manager" } });
-            configuration.policy.Add(new Policy { name = @"Domain1\AEA_DatabaseAdmins", role = new Role { name = "Content Manager" } });
-
             File.WriteAllText(this.configurationVariables.GetPathToConfigFile(), this.xmlSerialization.Serialize(configuration, Encoding.UTF8));
             return null;
         }
