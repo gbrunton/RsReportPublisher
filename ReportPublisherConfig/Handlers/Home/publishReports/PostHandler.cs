@@ -24,12 +24,18 @@ namespace ReportPublisherConfig.Handlers.Home.publishReports
                 process.StartInfo.UseShellExecute = true;
                 process.StartInfo.FileName = "cmd.exe";
                 process.StartInfo.WorkingDirectory = this.configurationVariables.GetReportPublisherBinFolderPath();
-                process.StartInfo.Arguments = "/K {0} TrustFundAEA {1}"
-                    .ToFormat
-                    (
-                        this.configurationVariables.GetReportPublisherProgramPath(),
-                        publishReportsInputModel.folderName.ToUpper() == "CONFIGURATION" ? "all" : publishReportsInputModel.folderName
-                     );
+	            process.StartInfo.Arguments = "/K {0} {1} {2} {3} {4} -projectname {5}"
+		            .ToFormat
+		            (
+			            this.configurationVariables.GetReportPublisherProgramPath(),
+						"publish",
+						publishReportsInputModel.site,
+						this.configurationVariables.GetPathToConfigFile(),
+						this.configurationVariables.GetReportServerRootFolder(),
+			            publishReportsInputModel.folderName.ToUpper() == "CONFIGURATION"
+				            ? ""
+				            : publishReportsInputModel.folderName
+		            );
                 process.Start();
                 process.WaitForExit();
             }
