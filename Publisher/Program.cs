@@ -15,6 +15,7 @@ namespace Publisher
 						"https://phxqiclink.adssa.local/ReportServer$DataPiction2005/ReportService2005.asmx",
 						@"C:\gary\devel\QicLink\ReportingServices\Reports\ReportPublisher.config",
 						"ClaimsReports",
+						"-p",
 						"Basys"
 					};
 			}
@@ -25,7 +26,7 @@ namespace Publisher
 				var factory = new CommandFactory();
 				factory.SetAppName("ssaportal");
 				factory.RegisterCommands(typeof(IFubuCommand).Assembly);
-				factory.RegisterCommands(typeof(Program).Assembly);
+				factory.RegisterCommands(typeof(Program).Assembly); 
 
 				var executor = new CommandExecutor(factory);
 				success = executor.Execute(args);

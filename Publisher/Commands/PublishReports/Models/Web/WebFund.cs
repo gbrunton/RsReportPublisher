@@ -17,13 +17,13 @@ namespace Publisher.Commands.PublishReports.Models.Web
 		// Constructors
 		//
 
-		public WebFund(string rootWebFolderName, string webFundName, string dataSourceName, bool inheritPermissions)
+		public WebFund(string rootWebFolderName, string webFundName, bool inheritPermissions, params string[] dataSourceName)
 		{
 			this.name = webFundName;
 
 			this.parentWebFolder = new WebFolder(this, rootWebFolderName) {DeleteExistingFolders = false};
             this.webFolder = this.parentWebFolder.AddWebFolder(webFundName, inheritPermissions);
-			this.webFolder.SetDataSource(dataSourceName, inheritPermissions);
+			this.webFolder.SetDataSources(dataSourceName, inheritPermissions);
 		}
 
 		//
@@ -64,9 +64,9 @@ namespace Publisher.Commands.PublishReports.Models.Web
 			}
 		}
 
-		public WebDataSource GetDataSource()
+		public WebDataSource[] GetDataSources()
 		{
-			return this.webFolder.GetDataSource();
+			return this.webFolder.GetDataSources();
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace ReportPublisherConfig.model
 
         private List<string> textField;
         private List<StyleSheet> styleSheetField;
-        private sharedDataSource sharedDataSourceField;
+        private List<sharedDataSource> sharedDataSourceField;
 
         /// <remarks/>
         [XmlText()]
@@ -80,7 +80,7 @@ namespace ReportPublisherConfig.model
         }
 
         [XmlElement("sharedDataSource")]
-        public sharedDataSource sharedDataSource
+        public List<sharedDataSource> sharedDataSource
         {
             get
             {

@@ -18,7 +18,7 @@ namespace Publisher.Commands.PublishReports.Models.Config
 		private ConfigFolder[] configFolders;
 		private ConfigReport[] configReports;
 		private ConfigStyleSheet[] configStyleSheets;
-		private ConfigDataSource dataSource;
+		private ConfigDataSource[] dataSources;
 
 		//
 		// Constructors
@@ -87,16 +87,25 @@ namespace Publisher.Commands.PublishReports.Models.Config
 			return this.configStyleSheets;
 		}
 
-		public ConfigDataSource DataSource
+		public ConfigDataSource[] DataSources
 		{
 			get
 			{
-				if (this.dataSource == null)
+				if (this.dataSources == null)
 				{
-					this.dataSource = new ConfigDataSource(base.node.SelectSingleNode(ConfigDataSource.SharedDataSource_Tag));
+					this.dataSources = new ConfigDataSource[0];
+
+					var nodes = base.node.SelectNodes(ConfigDataSource.SharedDataSource_Tag);
+
+					if (nodes == null) throw new NullReferenceException();
+
+					foreach (XmlNode selectedNode in nodes)
+					{
+						this.dataSources = (ConfigDataSource[])Utilities.ArrayManipulation.Insert(this.dataSources, new ConfigDataSource(selectedNode));
+					}
 				}
 
-				return this.dataSource;
+				return this.dataSources;
 			}
 		}
 	}

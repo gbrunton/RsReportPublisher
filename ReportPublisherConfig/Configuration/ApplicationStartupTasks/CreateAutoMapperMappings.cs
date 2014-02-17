@@ -21,7 +21,7 @@ namespace ReportPublisherConfig.Configuration.ApplicationStartupTasks
                 .ForMember(dest => dest.styleSheet, opt => opt.MapFrom(src => getChildrenWithAttribute(src, "StyleSheet", "CommonStyleSheet")))
                 .ForMember(dest => dest.folder, opt => opt.MapFrom(src => getChildrenWithAttribute(src, "Folder", "DoesNotInheritPermissionsFolder")))
                 .ForMember(dest => dest.Text, opt => opt.Ignore())
-                .ForMember(dest => dest.sharedDataSource, opt => opt.MapFrom(src => getChildWithAttribute(src, "DataSource")))
+				.ForMember(dest => dest.sharedDataSource, opt => opt.MapFrom(src => getChildrenWithAttribute(src, "DataSource")))
                 .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.data));
 
             Mapper.CreateMap<jsTreeSaveInputModel, Report>()
@@ -42,8 +42,8 @@ namespace ReportPublisherConfig.Configuration.ApplicationStartupTasks
                 .ForMember(dest => dest.name, opt => opt.MapFrom(src => getKey(src)))
                 .ForMember(dest => dest.value, opt => opt.MapFrom(src => getValue(src)));
 
-            Mapper.CreateMap<jsTreeSaveInputModel, sharedDataSource>()
-                .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.data));
+			Mapper.CreateMap<jsTreeSaveInputModel, sharedDataSource>()
+				.ForMember(dest => dest.name, opt => opt.MapFrom(src => src.data));
 
             Mapper.AssertConfigurationIsValid();
         }

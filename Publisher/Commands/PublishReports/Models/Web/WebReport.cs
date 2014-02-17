@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Publisher.WebReportService;
 
 namespace Publisher.Commands.PublishReports.Models.Web
@@ -55,7 +56,19 @@ namespace Publisher.Commands.PublishReports.Models.Web
 				base.reportingService.SetReportDefinition(base.fullName, reportDefinition);
 			}
 
-			base.reportingService.SetItemDataSources(base.fullName, new[] {base.webFund.GetDataSource().DataSource});
+			var dataSourcesAssociatedWithTheReport = base.reportingService.GetItemDataSources(base.fullName);
+			var dataSources = base.webFund
+				.GetDataSources()
+				// Look here, I've never used a Join before now! Weird syntax I must say.
+				.Join(dataSourcesAssociatedWithTheReport, ds => ds.Name, ids => ids.Name, (source, dataSource) => source)
+				.Select(x => x.DataSource)
+				.ToArray();
+
+			if (dataSources.Any())
+			{
+				base.reportingService.SetItemDataSources(base.fullName, dataSources);				
+			}
+
 			base.savePolicies();
 			base.saveProperties();
 			this.saveReportParameters();

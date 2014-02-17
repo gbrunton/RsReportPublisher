@@ -76,9 +76,12 @@
     {
         if (_object.GetType().GetProperty("sharedDataSource") != null && _object.sharedDataSource != null)
         {
-        <li rel="DataSource">
-            <a href="#">@_object.sharedDataSource.name</a>
-        </li>
+            foreach (var datasource in _object.sharedDataSource)
+            {
+                <li rel="DataSource">
+                    <a href="#">@datasource.name</a>
+                </li>
+            }
         }
 
         if (_object.GetType().GetProperty("styleSheet") != null && _object.styleSheet != null)

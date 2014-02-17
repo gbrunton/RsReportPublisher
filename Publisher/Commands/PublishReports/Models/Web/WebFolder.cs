@@ -13,7 +13,7 @@ namespace Publisher.Commands.PublishReports.Models.Web
 		private WebFolder[] webFolders = new WebFolder[0];
 		private WebReport[] webReports = new WebReport[0];
 		private WebStyleSheet[] webStyleSheets = new WebStyleSheet[0];
-		private WebDataSource webDataSource;
+		private WebDataSource[] webDataSources = new WebDataSource[0];
 		private bool deleteExistingFolders = true;
 
 		//
@@ -34,12 +34,7 @@ namespace Publisher.Commands.PublishReports.Models.Web
 
 		private bool isItemValid(string itemName)
 		{
-			var valid = false;
-
-			if (this.webDataSource != null && this.webDataSource.Name.Equals(itemName))
-			{
-				valid = true;
-			}
+			var valid = isItemValid(itemName, this.webDataSources);
 
 			if (! valid)
 			{
@@ -95,9 +90,9 @@ namespace Publisher.Commands.PublishReports.Models.Web
 				}
 			}
 
-			if (this.webDataSource != null)
+			foreach (var webDataSource in this.webDataSources)
 			{
-				this.webDataSource.Save();
+				webDataSource.Save();
 			}
 
 			foreach (var webReport in this.webReports)
@@ -148,14 +143,18 @@ namespace Publisher.Commands.PublishReports.Models.Web
 			return webStyleSheet;
 		}
 
-        public void SetDataSource(string dataSourceName, bool inheritPermissions)
+        public void SetDataSources(IEnumerable<string> dataSourceNames, bool inheritPermissions)
 		{
-            this.webDataSource = new WebDataSource(base.webFund, this, dataSourceName, base.webFund.Name, inheritPermissions);
+	        foreach (var dataSourceName in dataSourceNames)
+	        {
+				var webDataSource = new WebDataSource(base.webFund, this, dataSourceName, base.webFund.Name, inheritPermissions);
+				this.webDataSources = (WebDataSource[])Utilities.ArrayManipulation.Insert(this.webDataSources, webDataSource);
+	        }
 		}
 
-		public WebDataSource GetDataSource()
+		public WebDataSource[] GetDataSources()
 		{
-			return this.webDataSource;
+			return this.webDataSources;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FubuCore.CommandLine;
 using Publisher.Commands.PublishReports.Models;
 using Publisher.Commands.PublishReports.Models.Config;
@@ -32,7 +33,7 @@ namespace Publisher.Commands.PublishReports
 
 				Console.WriteLine("Starting Project {0} report publishing.", configFolder.Name);
 
-				var webFund = new WebFund(reportServerRootFolder, configFolder.Name, configFolder.DataSource.Name, configFolder.InheritPermissions);
+				var webFund = new WebFund(reportServerRootFolder, configFolder.Name, configFolder.InheritPermissions, configFolder.DataSources.Select(x => x.Name).ToArray());
 
 				build(configFolder, webFund.RootWebFolder);
 				webFund.Save();
